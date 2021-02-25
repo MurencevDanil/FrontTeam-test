@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReduxForm from './forms/newTaskForm';
 
-const NewListItem = (props) => {
+const FormContainer = (props) => {
   const onSubmit = (formData) => {
     props.addTask(formData);
   };
@@ -14,12 +14,12 @@ const NewListItem = (props) => {
   );
 };
 
-NewListItem.propTypes = {
+FormContainer.propTypes = {
   addTask: PropTypes.func,
 };
 
-NewListItem.defaultProps = {
+FormContainer.defaultProps = {
   addTask: undefined,
 };
 
-export default NewListItem;
+export default FormContainer;
