@@ -1,37 +1,26 @@
 import { Button, TextField } from '@material-ui/core';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { useTextFieldStyles } from './newTaskFormStyles';
 
-const TaskForm = (props) => {
-  return (<>
-    <form onSubmit={props.handleSubmit}>
-      <Field
-        placeholder="Text here"
-        name="newTask"
-        type="text"
-        component={RenderField}
-        validate={required}
-      />
-      <Button variant="contained" color="secondary" type='submit' size='large'>Add</Button>
-    </form>
-  </>);
-};
-
 const RenderField = ({
+  // eslint-disable-next-line
   input,
   placeholder,
   type,
-  meta: { touched, error }
+  // eslint-disable-next-line
+  meta: { touched, error },
 }) => {
   const classes = useTextFieldStyles();
   const hasError = touched && error;
-  console.log(hasError);
+
   return (
     <>
       <TextField
         variant="outlined"
         className={classes.root}
+        // eslint-disable-next-line
         {...input}
         placeholder={placeholder}
         type={type}
@@ -43,11 +32,42 @@ const RenderField = ({
   );
 };
 
+RenderField.propTypes = {
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+};
+RenderField.defaultProps = {
+  placeholder: undefined,
+  type: undefined,
+};
+
 const required = (value) => {
   if (!value) {
     return 'Field is required';
   }
   return undefined;
+};
+
+const TaskForm = (props) => (
+  <>
+    <form onSubmit={props.handleSubmit}>
+      <Field
+        placeholder="Text here"
+        name="newTask"
+        type="text"
+        component={RenderField}
+        validate={required}
+      />
+      <Button variant="contained" color="secondary" type="submit" size="large">Add</Button>
+    </form>
+  </>
+);
+
+TaskForm.propTypes = {
+  handleSubmit: PropTypes.func,
+};
+TaskForm.defaultProps = {
+  handleSubmit: undefined,
 };
 
 const ReduxForm = reduxForm({

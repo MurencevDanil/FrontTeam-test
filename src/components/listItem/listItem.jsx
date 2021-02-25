@@ -20,7 +20,6 @@ const ListItem = (props) => {
     <div>
       <Checkbox
         inputProps={{ 'aria-label': 'primary checkbox' }}
-        // eslint-disable-next-line react/destructuring-assignment
         checked={props.checked}
         onChange={toggleChecked}
       />
@@ -28,7 +27,6 @@ const ListItem = (props) => {
         id="standard-basic"
         label="Your task"
         type="text"
-        // eslint-disable-next-line react/destructuring-assignment
         value={props.taskText}
         inputRef={inputEl}
         onChange={finishEditing}
@@ -72,7 +70,10 @@ RenderField.propTypes = {
   value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
-  inputRef: PropTypes.func,
+  inputRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
 };
 
 RenderField.defaultProps = {

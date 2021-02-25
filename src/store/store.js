@@ -11,4 +11,3 @@ const reducerBatch = combineReducers({
 const store = createStore(reducerBatch, applyMiddleware(thunkMIddleware));
 
 export default store;
-window.store = store;

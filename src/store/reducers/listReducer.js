@@ -21,21 +21,11 @@ const listReducer = (state = initialState, action) => {
     case 'FINISH_EDITING': {
       const task = [...state.tasks];
       const editableTask = task.filter((item) => item.id === action.payload.id);
-      editableTask[0].contentEditable = 'false';
       editableTask[0].taskText = action.payload.taskText;
       return {
         ...state,
         tasks: task,
 
-      };
-    }
-    case 'START_EDITING': {
-      const task = [...state.tasks];
-      const editableTask = task.filter((item) => item.id === action.id);
-      editableTask[0].contentEditable = 'true';
-      return {
-        ...state,
-        tasks: task,
       };
     }
     case 'TOGGLE_CHECKED': {
@@ -75,9 +65,6 @@ export const deleteTask = (id) => (dispatch) => {
   taskListAPI.delete(id).then((payload) => {
     dispatch({ type: 'DELETE_TASK', payload });
   });
-};
-export const startEditing = (id) => (dispatch) => {
-  dispatch({ type: 'START_EDITING', id });
 };
 export const toggleChecked = (id, checkedState) => (dispatch) => {
   taskListAPI.toggleChecked(id, checkedState).then((payload) => {

@@ -1,13 +1,13 @@
 import * as axios from 'axios';
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BASE_URL}` + '/tasks',
+  baseURL: `${process.env.REACT_APP_BASE_URL}/tasks`,
 });
 
 // eslint-disable-next-line
 export const taskListAPI = {
-  add(newTaskText, checked = false, contentEditable = false) {
-    const data = { taskText: newTaskText, contentEditable, checked };
+  add(newTaskText, checked = false) {
+    const data = { taskText: newTaskText, checked };
     return instance.post('', data)
       .then((response) => response.data);
   },
@@ -27,16 +27,12 @@ export const taskListAPI = {
       });
   },
   toggleChecked(id, checkedState) {
-    debugger;
     let data;
     if (!checkedState) {
       data = { checked: true };
     } else {
       data = { checked: false };
     }
-    return instance.patch(`${id}`, data).then((res) => {
-      console.log(res);
-      return res.data;
-    });
+    return instance.patch(`${id}`, data).then((res) => res.data);
   },
 };

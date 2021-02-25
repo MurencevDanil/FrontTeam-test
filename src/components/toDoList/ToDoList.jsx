@@ -1,18 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import FormContainer from './formContainer/formContainer';
+import FormContainer from '../formContainer/formContainer';
 import {
   addNewTask,
   deleteTask,
   finishEditing,
-  startEditing,
   getTaskData,
   toggleChecked,
-} from '../store/reducers/listReducer';
-import ListItem from './listItem/listItem';
+} from '../../store/reducers/listReducer';
+import ListItem from '../listItem/listItem';
 
 class ToDoList extends React.Component {
+  constructor() {
+    super();
+    this.addTask = this.addTask.bind(this);
+  }
+
   componentDidMount() {
     this.props.getTaskData();
   }
@@ -32,7 +36,6 @@ class ToDoList extends React.Component {
             this.props.taskList.map((el) => (
               <ListItem
                 key={el.id}
-                startEditing={this.props.startEditing}
                 finishEditing={this.props.finishEditing}
                 toggleChecked={this.props.toggleChecked}
                 deleteTask={this.props.deleteTask}
@@ -51,16 +54,18 @@ class ToDoList extends React.Component {
 
 ToDoList.propTypes = {
   getTaskData: PropTypes.func,
-  startEditing: PropTypes.func,
   finishEditing: PropTypes.func,
   toggleChecked: PropTypes.func,
   deleteTask: PropTypes.func,
   addNewTask: PropTypes.func,
-  taskList: PropTypes.arrayOf(PropTypes.array()),
+  taskList: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string,
+    checked: PropTypes.bool,
+    id: PropTypes.number,
+  })),
 };
 ToDoList.defaultProps = {
   getTaskData: undefined,
-  startEditing: undefined,
   finishEditing: undefined,
   toggleChecked: undefined,
   deleteTask: undefined,
@@ -78,5 +83,4 @@ export default connect(mapStatetoProps, {
   finishEditing,
   getTaskData,
   toggleChecked,
-  startEditing,
 })(ToDoList);
